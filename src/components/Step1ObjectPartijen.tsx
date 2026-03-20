@@ -34,8 +34,8 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
               onClick={() => onChange({ type_object: type.value })}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 formData.type_object === type.value
-                  ? 'bg-teal-700 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-slate-800 text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
               {type.label}
@@ -60,10 +60,10 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
             value={formData.kadastrale_aanduiding}
             onChange={(e) => onChange({ kadastrale_aanduiding: e.target.value })}
             placeholder="ASD04 K 1234 A-1"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
           {formData.kadastrale_aanduiding && (
-            <p className="text-xs text-teal-600 mt-1">Automatisch ingevuld vanuit PDOK</p>
+            <p className="text-xs text-slate-500 mt-1">Automatisch ingevuld vanuit PDOK</p>
           )}
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
             value={formData.verkoper_naam}
             onChange={(e) => onChange({ verkoper_naam: e.target.value })}
             placeholder="Naam verkoper"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
         <div>
@@ -87,7 +87,7 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
             value={formData.koper_naam}
             onChange={(e) => onChange({ koper_naam: e.target.value })}
             placeholder="Naam koper"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
               value={formData.koopprijs ? formData.koopprijs / 100 : ''}
               onChange={(e) => onChange({ koopprijs: Math.round(parseFloat(e.target.value || '0') * 100) })}
               placeholder="450.000"
-              className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
             type="date"
             value={formData.leveringsdatum}
             onChange={(e) => onChange({ leveringsdatum: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
       </div>

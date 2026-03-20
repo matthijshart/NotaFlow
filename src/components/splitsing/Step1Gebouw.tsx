@@ -31,7 +31,7 @@ export default function Step1Gebouw({ formData, onChange }: Props) {
             value={formData.kadastrale_aanduiding}
             onChange={(e) => onChange({ kadastrale_aanduiding: e.target.value })}
             placeholder="ASD04 K 1234"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -44,7 +44,7 @@ export default function Step1Gebouw({ formData, onChange }: Props) {
             min={2}
             value={formData.aantal_appartementen}
             onChange={(e) => onChange({ aantal_appartementen: parseInt(e.target.value) || 2 })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
         <div>
@@ -54,7 +54,7 @@ export default function Step1Gebouw({ formData, onChange }: Props) {
             value={formData.bouwjaar}
             onChange={(e) => onChange({ bouwjaar: e.target.value })}
             placeholder="bijv. 1920"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
         <div>
@@ -64,7 +64,7 @@ export default function Step1Gebouw({ formData, onChange }: Props) {
             value={formData.vve_naam}
             onChange={(e) => onChange({ vve_naam: e.target.value })}
             placeholder="VvE Keizersgracht 100"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function Step1Gebouw({ formData, onChange }: Props) {
           value={formData.eigenaar_naam}
           onChange={(e) => onChange({ eigenaar_naam: e.target.value })}
           placeholder="Naam eigenaar van het gebouw"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
         />
       </div>
     </div>

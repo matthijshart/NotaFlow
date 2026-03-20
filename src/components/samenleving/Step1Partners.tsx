@@ -26,7 +26,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
               value={formData.partner1_naam}
               onChange={(e) => onChange({ partner1_naam: e.target.value })}
               placeholder="Volledige naam"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -35,7 +35,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
               type="date"
               value={formData.partner1_geboortedatum}
               onChange={(e) => onChange({ partner1_geboortedatum: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
             />
           </div>
           <div className="md:col-span-2">
@@ -45,7 +45,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
               value={formData.partner1_adres}
               onChange={(e) => onChange({ partner1_adres: e.target.value })}
               placeholder="Woonadres partner 1"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -62,7 +62,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
               value={formData.partner2_naam}
               onChange={(e) => onChange({ partner2_naam: e.target.value })}
               placeholder="Volledige naam"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -71,7 +71,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
               type="date"
               value={formData.partner2_geboortedatum}
               onChange={(e) => onChange({ partner2_geboortedatum: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
             />
           </div>
           <div className="md:col-span-2">
@@ -81,7 +81,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
               value={formData.partner2_adres}
               onChange={(e) => onChange({ partner2_adres: e.target.value })}
               placeholder="Woonadres partner 2"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
             type="date"
             value={formData.datum_samenwonen}
             onChange={(e) => onChange({ datum_samenwonen: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
         <div>
@@ -105,7 +105,7 @@ export default function Step1Partners({ formData, onChange }: Props) {
             value={formData.adres}
             onChange={(e) => onChange({ adres: e.target.value })}
             placeholder="Adres gezamenlijke woning"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
           />
         </div>
       </div>

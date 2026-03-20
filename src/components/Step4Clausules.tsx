@@ -65,7 +65,7 @@ export default function Step4Clausules({
         <button
           type="button"
           onClick={() => setShowLibrary(!showLibrary)}
-          className="text-sm text-teal-700 hover:text-teal-800 font-medium"
+          className="text-sm text-slate-700 hover:text-slate-900 font-medium"
         >
           + Clausule toevoegen
         </button>
@@ -85,7 +85,7 @@ export default function Step4Clausules({
                 <button
                   type="button"
                   onClick={() => { onAddClausule(c.id); setShowLibrary(false) }}
-                  className="text-xs text-teal-700 hover:text-teal-800 font-medium"
+                  className="text-xs text-slate-700 hover:text-slate-900 font-medium"
                 >
                   Toevoegen
                 </button>
@@ -115,7 +115,7 @@ export default function Step4Clausules({
                 <button
                   type="button"
                   onClick={() => startEdit(tc)}
-                  className="text-xs text-gray-500 hover:text-teal-700"
+                  className="text-xs text-gray-500 hover:text-slate-700"
                 >
                   Bekijken
                 </button>
@@ -125,7 +125,7 @@ export default function Step4Clausules({
                   aria-checked={tc.actief}
                   onClick={() => onToggleClausule(tc.id, !tc.actief)}
                   className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full transition-colors ${
-                    tc.actief ? 'bg-teal-600' : 'bg-gray-200'
+                    tc.actief ? 'bg-slate-700' : 'bg-gray-200'
                   }`}
                 >
                   <span
@@ -161,7 +161,7 @@ export default function Step4Clausules({
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
                 rows={15}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent resize-none"
               />
             </div>
             <div className="px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
@@ -175,7 +175,7 @@ export default function Step4Clausules({
               <button
                 type="button"
                 onClick={saveEdit}
-                className="px-4 py-2 text-sm bg-teal-700 text-white rounded-lg hover:bg-teal-800"
+                className="px-4 py-2 text-sm bg-slate-800 text-white rounded-lg hover:bg-slate-900"
               >
                 Opslaan
               </button>

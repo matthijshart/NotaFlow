@@ -30,7 +30,7 @@ function Toggle({
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors ${
-          checked ? 'bg-teal-600' : 'bg-gray-200'
+          checked ? 'bg-slate-700' : 'bg-gray-200'
         }`}
       >
         <span
@@ -72,7 +72,7 @@ export default function Step3Voorwaarden({ formData, onChange }: Props) {
               max={12}
               value={formData.financieringstermijn_weken}
               onChange={(e) => onChange({ financieringstermijn_weken: parseInt(e.target.value) })}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-teal-600"
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
             />
             <div className="flex justify-between text-xs text-gray-400 mt-1">
               <span>3 weken</span>

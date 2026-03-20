@@ -30,7 +30,7 @@ function Toggle({
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors ${
-          checked ? 'bg-teal-600' : 'bg-gray-200'
+          checked ? 'bg-slate-700' : 'bg-gray-200'
         }`}
       >
         <span
@@ -67,11 +67,11 @@ export default function Step2Vermogen({ formData, onChange }: Props) {
               onClick={() => onChange({ vermogensregeling: opt.value })}
               className={`p-4 rounded-lg border text-left transition-all ${
                 formData.vermogensregeling === opt.value
-                  ? 'border-teal-500 bg-teal-50'
+                  ? 'border-slate-500 bg-slate-50'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
-              <span className={`text-sm font-medium ${formData.vermogensregeling === opt.value ? 'text-teal-700' : 'text-gray-900'}`}>
+              <span className={`text-sm font-medium ${formData.vermogensregeling === opt.value ? 'text-slate-700' : 'text-gray-900'}`}>
                 {opt.label}
               </span>
               <p className="text-xs text-gray-500 mt-1">{opt.desc}</p>
@@ -103,7 +103,7 @@ export default function Step2Vermogen({ formData, onChange }: Props) {
                   onClick={() => onChange({ woning_eigenaar: opt.value })}
                   className={`px-4 py-1.5 rounded-full text-sm transition-colors ${
                     formData.woning_eigenaar === opt.value
-                      ? 'bg-teal-700 text-white'
+                      ? 'bg-slate-800 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >

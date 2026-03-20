@@ -30,7 +30,7 @@ function Toggle({
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors ${
-          checked ? 'bg-teal-600' : 'bg-gray-200'
+          checked ? 'bg-slate-700' : 'bg-gray-200'
         }`}
       >
         <span
@@ -79,7 +79,7 @@ export default function Step2Kenmerken({ formData, onChange }: Props) {
                   onClick={() => onChange({ erfpacht_type: type })}
                   className={`px-4 py-1.5 rounded-full text-sm transition-colors ${
                     formData.erfpacht_type === type
-                      ? 'bg-teal-700 text-white'
+                      ? 'bg-slate-800 text-white'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >

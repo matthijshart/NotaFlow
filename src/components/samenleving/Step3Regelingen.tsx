@@ -30,7 +30,7 @@ function Toggle({
         aria-checked={checked}
         onClick={() => onChange(!checked)}
         className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors ${
-          checked ? 'bg-teal-600' : 'bg-gray-200'
+          checked ? 'bg-slate-700' : 'bg-gray-200'
         }`}
       >
         <span

@@ -20,10 +20,10 @@ export default function ProgressBar({ currentStep, steps }: Props) {
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-teal-700 text-white'
+                      ? 'bg-slate-800 text-white'
                       : isCompleted
-                      ? 'bg-teal-100 text-teal-800'
-                      : 'bg-gray-200 text-gray-500'
+                      ? 'bg-slate-200 text-slate-700'
+                      : 'bg-slate-100 text-slate-400'
                   }`}
                 >
                   {isCompleted ? (
@@ -36,7 +36,7 @@ export default function ProgressBar({ currentStep, steps }: Props) {
                 </div>
                 <span
                   className={`text-xs mt-1 whitespace-nowrap ${
-                    isActive ? 'text-teal-700 font-medium' : 'text-gray-400'
+                    isActive ? 'text-slate-800 font-medium' : 'text-slate-400'
                   }`}
                 >
                   {label}
@@ -45,7 +45,7 @@ export default function ProgressBar({ currentStep, steps }: Props) {
               {i < steps.length - 1 && (
                 <div
                   className={`flex-1 h-px mx-3 mt-[-16px] ${
-                    isCompleted ? 'bg-teal-300' : 'bg-gray-200'
+                    isCompleted ? 'bg-slate-400' : 'bg-slate-200'
                   }`}
                 />
               )}

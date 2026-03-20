@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NotaFlow — Koopovereenkomst Builder",
-  description: "Genereer concept-koopovereenkomsten voor woningen in Amsterdam",
+  title: "NotaFlow — Akte Builder",
+  description: "Genereer concept-akten voor notariskantoren in Amsterdam",
 };
 
 export default function RootLayout({

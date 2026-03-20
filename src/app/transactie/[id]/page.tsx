@@ -247,7 +247,7 @@ export default function TransactiePage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">Laden...</p>
+        <p className="text-slate-400">Laden...</p>
       </div>
     )
   }
@@ -308,12 +308,12 @@ export default function TransactiePage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <header className="border-b border-gray-200 bg-white">
+      <header className="border-b border-slate-200 bg-white">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push('/')}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-slate-400 hover:text-slate-600 transition-colors"
               title="Terug naar home"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -321,13 +321,13 @@ export default function TransactiePage() {
               </svg>
             </button>
             <div>
-              <h1 className="text-lg font-semibold text-gray-900">NotaFlow</h1>
-              <p className="text-xs text-gray-400">{documentTypeLabels[documentType]}</p>
+              <h1 className="text-lg font-semibold text-slate-900">NotaFlow</h1>
+              <p className="text-xs text-slate-400">{documentTypeLabels[documentType]}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {saving && <span className="text-xs text-gray-400">Opslaan...</span>}
-            <span className="text-xs px-2 py-1 bg-gray-100 text-gray-500 rounded">Concept</span>
+            {saving && <span className="text-xs text-slate-400">Opslaan...</span>}
+            <span className="text-xs px-2 py-1 bg-slate-100 text-slate-500 rounded">Concept</span>
           </div>
         </div>
       </header>
@@ -339,12 +339,12 @@ export default function TransactiePage() {
           {renderCurrentStep()}
         </div>
 
-        <div className="flex justify-between mt-10 pt-6 border-t border-gray-200">
+        <div className="flex justify-between mt-10 pt-6 border-t border-slate-200">
           <button
             type="button"
             onClick={handleBack}
             disabled={step === 1}
-            className="px-5 py-2 text-sm text-gray-600 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-5 py-2 text-sm text-slate-600 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Vorige
           </button>
@@ -352,7 +352,7 @@ export default function TransactiePage() {
             <button
               type="button"
               onClick={handleNext}
-              className="px-6 py-2 text-sm bg-teal-700 hover:bg-teal-800 text-white rounded-lg transition-colors"
+              className="px-6 py-2 text-sm bg-slate-800 hover:bg-slate-900 text-white rounded-lg transition-colors"
             >
               Volgende
             </button>
@@ -361,7 +361,7 @@ export default function TransactiePage() {
               type="button"
               onClick={handleExport}
               disabled={exporting}
-              className="px-6 py-2 text-sm bg-teal-700 hover:bg-teal-800 text-white rounded-lg transition-colors disabled:opacity-50"
+              className="px-6 py-2 text-sm bg-slate-800 hover:bg-slate-900 text-white rounded-lg transition-colors disabled:opacity-50"
             >
               {exporting ? 'Exporteren...' : 'Download als Word'}
             </button>

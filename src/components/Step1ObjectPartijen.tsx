@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { KoopovereenkomstFormData } from '@/lib/types'
 import AdresAutocomplete from './AdresAutocomplete'
 
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function Step1ObjectPartijen({ formData, onChange }: Props) {
+  const [kadastraalLoading, setKadastraalLoading] = useState(false)
   return (
     <div className="space-y-8">
       <div>
@@ -54,18 +56,53 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
             onSelect={(adres, kadastraal) =>
               onChange({ adres, kadastrale_aanduiding: kadastraal || formData.kadastrale_aanduiding })
             }
+            onKadastraalLoading={setKadastraalLoading}
           />
           <div>
             <label className="block text-sm font-medium text-nota-700 mb-1.5">Kadastrale aanduiding</label>
-            <input
-              type="text"
-              value={formData.kadastrale_aanduiding}
-              onChange={(e) => onChange({ kadastrale_aanduiding: e.target.value })}
-              placeholder="ASD04 K 1234 A-1"
-              className="w-full px-3.5 py-2.5 border border-[var(--border)] rounded-lg text-sm bg-white focus:outline-none"
-            />
-            {formData.kadastrale_aanduiding && (
-              <p className="text-xs text-[var(--muted)] mt-1.5">Automatisch ingevuld vanuit PDOK</p>
+            <div className="relative">
+              <input
+                type="text"
+                value={formData.kadastrale_aanduiding}
+                onChange={(e) => onChange({ kadastrale_aanduiding: e.target.value })}
+                placeholder={kadastraalLoading ? 'Opzoeken bij Kadaster...' : 'ASD04 K 1234 A-1'}
+                className={`w-full px-3.5 py-2.5 border rounded-lg text-sm bg-white focus:outline-none transition-colors duration-200 ${
+                  kadastraalLoading
+                    ? 'border-nota-300 bg-nota-50 text-nota-400'
+                    : formData.kadastrale_aanduiding
+                    ? 'border-green-300 bg-green-50'
+                    : 'border-[var(--border)]'
+                }`}
+                readOnly={kadastraalLoading}
+              />
+              {kadastraalLoading && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-nota-200 border-t-nota-600 rounded-full animate-spin" />
+                </div>
+              )}
+              {!kadastraalLoading && formData.kadastrale_aanduiding && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              )}
+            </div>
+            {kadastraalLoading && (
+              <p className="text-xs text-nota-500 mt-1.5 flex items-center gap-1">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Kadastrale gegevens worden opgezocht...
+              </p>
+            )}
+            {!kadastraalLoading && formData.kadastrale_aanduiding && (
+              <p className="text-xs text-green-600 mt-1.5 flex items-center gap-1">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Automatisch ingevuld vanuit PDOK Kadaster
+              </p>
             )}
           </div>
         </div>

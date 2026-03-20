@@ -22,9 +22,10 @@ interface Props {
   value: string
   onSelect: (adres: string, kadastraal: string) => void
   onChange: (value: string) => void
+  onKadastraalLoading?: (loading: boolean) => void
 }
 
-export default function AdresAutocomplete({ value, onSelect, onChange }: Props) {
+export default function AdresAutocomplete({ value, onSelect, onChange, onKadastraalLoading }: Props) {
   const [suggestions, setSuggestions] = useState<PDOKSuggestion[]>([])
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -69,6 +70,46 @@ export default function AdresAutocomplete({ value, onSelect, onChange }: Props) 
     }
   }, [])
 
+  // Secondary lookup: search for perceel (cadastral parcel) by address text
+  async function fetchPerceelByAddress(adresText: string): Promise<string> {
+    try {
+      const params = new URLSearchParams({
+        q: adresText,
+        fq: 'gemeentenaam:amsterdam',
+        fl: 'id,weergavenaam,type,kadastrale_aanduiding',
+        rows: '1',
+      })
+      params.append('fq', 'type:perceel')
+
+      const res = await fetch(
+        `https://api.pdok.nl/bzk/locatieserver/search/v3_1/suggest?${params}`
+      )
+      const data = await res.json()
+      const firstDoc = data.response?.docs?.[0]
+
+      if (!firstDoc) return ''
+
+      // If kadastrale_aanduiding is directly available
+      if (firstDoc.kadastrale_aanduiding?.[0]) {
+        return firstDoc.kadastrale_aanduiding[0]
+      }
+
+      // Otherwise lookup the perceel for full details
+      const lookupParams = new URLSearchParams({
+        id: firstDoc.id,
+        fl: 'kadastrale_aanduiding,weergavenaam',
+      })
+      const lookupRes = await fetch(
+        `https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup?${lookupParams}`
+      )
+      const lookupData = await lookupRes.json()
+      const doc = lookupData.response?.docs?.[0]
+      return doc?.kadastrale_aanduiding?.[0] || doc?.weergavenaam || ''
+    } catch {
+      return ''
+    }
+  }
+
   function handleInputChange(val: string) {
     onChange(val)
 
@@ -81,12 +122,13 @@ export default function AdresAutocomplete({ value, onSelect, onChange }: Props) 
   async function handleSelect(suggestion: PDOKSuggestion) {
     setOpen(false)
     onChange(suggestion.weergavenaam)
+    onKadastraalLoading?.(true)
 
     // Lookup full details to get kadastrale aanduiding
     try {
       const params = new URLSearchParams({
         id: suggestion.id,
-        fl: 'straatnaam,huis_nlt,postcode,woonplaatsnaam,kadastrale_aanduiding',
+        fl: 'straatnaam,huis_nlt,postcode,woonplaatsnaam,kadastrale_aanduiding,centroide_ll',
       })
       const res = await fetch(
         `https://api.pdok.nl/bzk/locatieserver/search/v3_1/lookup?${params}`
@@ -95,11 +137,18 @@ export default function AdresAutocomplete({ value, onSelect, onChange }: Props) 
       const doc: PDOKLookupResult = data.response?.docs?.[0] || {}
 
       const adres = suggestion.weergavenaam
-      const kadastraal = doc.kadastrale_aanduiding?.[0] || ''
+      let kadastraal = doc.kadastrale_aanduiding?.[0] || ''
+
+      // If no cadastral data from address lookup, try perceel search
+      if (!kadastraal) {
+        kadastraal = await fetchPerceelByAddress(adres)
+      }
 
       onSelect(adres, kadastraal)
     } catch {
       onSelect(suggestion.weergavenaam, '')
+    } finally {
+      onKadastraalLoading?.(false)
     }
   }
 

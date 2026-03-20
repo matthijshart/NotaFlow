@@ -19,22 +19,22 @@ function Toggle({
   onChange: (val: boolean) => void
 }) {
   return (
-    <div className="flex items-start justify-between py-4 border-b border-gray-100 last:border-0">
+    <div className="flex items-start justify-between py-4 border-b border-[var(--border-light)] last:border-0">
       <div className="pr-4">
-        <span className="text-sm font-medium text-gray-900">{label}</span>
-        {description && <p className="text-xs text-gray-500 mt-0.5">{description}</p>}
+        <span className="text-sm font-medium text-nota-900">{label}</span>
+        {description && <p className="text-xs text-[var(--muted)] mt-0.5">{description}</p>}
       </div>
       <button
         type="button"
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors ${
-          checked ? 'bg-slate-700' : 'bg-gray-200'
+        className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ${
+          checked ? 'bg-nota-700' : 'bg-gray-200'
         }`}
       >
         <span
-          className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform mt-0.5 ${
+          className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-sm transition-transform duration-200 mt-0.5 ${
             checked ? 'translate-x-5 ml-0.5' : 'translate-x-0.5'
           }`}
         />
@@ -47,13 +47,13 @@ export default function Step3Voorwaarden({ formData, onChange }: Props) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">Ontbindende voorwaarden</h2>
-        <p className="text-sm text-gray-500">
+        <h2 className="text-lg font-semibold text-nota-900 mb-1">Ontbindende voorwaarden</h2>
+        <p className="text-sm text-[var(--muted)]">
           Selecteer de ontbindende voorwaarden die van toepassing zijn
         </p>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 px-5">
+      <div className="bg-white rounded-xl border border-[var(--border)] shadow-card px-6">
         <Toggle
           label="Financieringsvoorbehoud"
           description="Koper kan ontbinden bij niet-verkrijgen financiering"
@@ -62,9 +62,9 @@ export default function Step3Voorwaarden({ formData, onChange }: Props) {
         />
 
         {formData.financieringsvoorbehoud && (
-          <div className="py-3 pl-4 border-b border-gray-100">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Financieringstermijn: {formData.financieringstermijn_weken} weken
+          <div className="py-4 pl-4 border-b border-[var(--border-light)]">
+            <label className="block text-sm font-medium text-nota-700 mb-2">
+              Financieringstermijn: <span className="text-nota-900 font-semibold">{formData.financieringstermijn_weken} weken</span>
             </label>
             <input
               type="range"
@@ -72,9 +72,9 @@ export default function Step3Voorwaarden({ formData, onChange }: Props) {
               max={12}
               value={formData.financieringstermijn_weken}
               onChange={(e) => onChange({ financieringstermijn_weken: parseInt(e.target.value) })}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-slate-600"
+              className="w-full h-2 bg-nota-100 rounded-lg appearance-none cursor-pointer"
             />
-            <div className="flex justify-between text-xs text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-[var(--muted)] mt-1">
               <span>3 weken</span>
               <span>12 weken</span>
             </div>

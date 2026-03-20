@@ -116,7 +116,7 @@ export default function AdresAutocomplete({ value, onSelect, onChange }: Props) 
 
   return (
     <div ref={wrapperRef} className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-1">Adres</label>
+      <label className="block text-sm font-medium text-nota-700 mb-1.5">Adres</label>
       <div className="relative">
         <input
           type="text"
@@ -124,25 +124,25 @@ export default function AdresAutocomplete({ value, onSelect, onChange }: Props) 
           onChange={(e) => handleInputChange(e.target.value)}
           onFocus={() => suggestions.length > 0 && setOpen(true)}
           placeholder="Zoek op straatnaam, postcode of adres..."
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+          className="w-full px-3.5 py-2.5 border border-[var(--border)] rounded-lg text-sm bg-white focus:outline-none"
         />
         {loading && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <div className="w-4 h-4 border-2 border-gray-300 border-t-slate-600 rounded-full animate-spin" />
+            <div className="w-4 h-4 border-2 border-nota-200 border-t-nota-600 rounded-full animate-spin" />
           </div>
         )}
       </div>
 
       {open && suggestions.length > 0 && (
-        <ul className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-64 overflow-y-auto">
+        <ul className="absolute z-50 w-full mt-1 bg-white border border-[var(--border)] rounded-xl shadow-lg max-h-64 overflow-y-auto">
           {suggestions.map((s) => (
             <li key={s.id}>
               <button
                 type="button"
                 onClick={() => handleSelect(s)}
-                className="w-full text-left px-3 py-2.5 text-sm hover:bg-gray-50 border-b border-gray-50 last:border-0 transition-colors"
+                className="w-full text-left px-4 py-2.5 text-sm hover:bg-nota-50 border-b border-[var(--border-light)] last:border-0 transition-colors duration-150"
               >
-                <span className="text-gray-900">{s.weergavenaam}</span>
+                <span className="text-nota-900">{s.weergavenaam}</span>
               </button>
             </li>
           ))}

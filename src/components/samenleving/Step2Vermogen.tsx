@@ -19,22 +19,22 @@ function Toggle({
   onChange: (val: boolean) => void
 }) {
   return (
-    <div className="flex items-start justify-between py-4 border-b border-gray-100 last:border-0">
+    <div className="flex items-start justify-between py-4 border-b border-[var(--border-light)] last:border-0">
       <div className="pr-4">
-        <span className="text-sm font-medium text-gray-900">{label}</span>
-        {description && <p className="text-xs text-gray-500 mt-0.5">{description}</p>}
+        <span className="text-sm font-medium text-nota-900">{label}</span>
+        {description && <p className="text-xs text-[var(--muted)] mt-0.5">{description}</p>}
       </div>
       <button
         type="button"
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors ${
-          checked ? 'bg-slate-700' : 'bg-gray-200'
+        className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 ${
+          checked ? 'bg-nota-700' : 'bg-gray-200'
         }`}
       >
         <span
-          className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform mt-0.5 ${
+          className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-sm transition-transform duration-200 mt-0.5 ${
             checked ? 'translate-x-5 ml-0.5' : 'translate-x-0.5'
           }`}
         />
@@ -47,15 +47,15 @@ export default function Step2Vermogen({ formData, onChange }: Props) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">Vermogen & woning</h2>
-        <p className="text-sm text-gray-500">
+        <h2 className="text-lg font-semibold text-nota-900 mb-1">Vermogen & woning</h2>
+        <p className="text-sm text-[var(--muted)]">
           Kies de vermogensregeling en woningsituatie
         </p>
       </div>
 
       {/* Vermogensregeling */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">Vermogensregeling</label>
+        <label className="block text-sm font-medium text-nota-800 mb-3">Vermogensregeling</label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {([
             { value: 'koude_uitsluiting', label: 'Koude uitsluiting', desc: 'Ieder behoudt eigen vermogen — geen gemeenschap van goederen' },
@@ -65,22 +65,22 @@ export default function Step2Vermogen({ formData, onChange }: Props) {
               key={opt.value}
               type="button"
               onClick={() => onChange({ vermogensregeling: opt.value })}
-              className={`p-4 rounded-lg border text-left transition-all ${
+              className={`p-5 rounded-xl border text-left transition-all duration-150 ${
                 formData.vermogensregeling === opt.value
-                  ? 'border-slate-500 bg-slate-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-nota-400 bg-nota-50 shadow-sm'
+                  : 'border-[var(--border)] bg-white hover:border-nota-300 shadow-card'
               }`}
             >
-              <span className={`text-sm font-medium ${formData.vermogensregeling === opt.value ? 'text-slate-700' : 'text-gray-900'}`}>
+              <span className={`text-sm font-semibold ${formData.vermogensregeling === opt.value ? 'text-nota-700' : 'text-nota-900'}`}>
                 {opt.label}
               </span>
-              <p className="text-xs text-gray-500 mt-1">{opt.desc}</p>
+              <p className="text-xs text-[var(--muted)] mt-1">{opt.desc}</p>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 px-5">
+      <div className="bg-white rounded-xl border border-[var(--border)] shadow-card px-6">
         <Toggle
           label="Gemeenschappelijke woning?"
           description="Regeling voor gebruik en eigendom van de gezamenlijke woning"
@@ -89,8 +89,8 @@ export default function Step2Vermogen({ formData, onChange }: Props) {
         />
 
         {formData.gemeenschappelijke_woning && (
-          <div className="py-3 pl-4 border-b border-gray-100">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Eigenaar woning</label>
+          <div className="py-3 pl-4 border-b border-[var(--border-light)]">
+            <label className="block text-sm font-medium text-nota-700 mb-2">Eigenaar woning</label>
             <div className="flex gap-2">
               {([
                 { value: 'partner1', label: 'Partner 1' },
@@ -101,10 +101,10 @@ export default function Step2Vermogen({ formData, onChange }: Props) {
                   key={opt.value}
                   type="button"
                   onClick={() => onChange({ woning_eigenaar: opt.value })}
-                  className={`px-4 py-1.5 rounded-full text-sm transition-colors ${
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     formData.woning_eigenaar === opt.value
-                      ? 'bg-slate-800 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-nota-700 text-white shadow-sm'
+                      : 'bg-nota-50 text-nota-600 hover:bg-nota-100 border border-nota-200'
                   }`}
                 >
                   {opt.label}

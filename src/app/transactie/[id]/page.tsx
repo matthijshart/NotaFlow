@@ -29,9 +29,9 @@ import { shouldClausuleBeActive } from '@/lib/clausule-engine'
 import { generateDocx } from '@/lib/docx-export'
 
 const stepsConfig: Record<DocumentType, string[]> = {
-  koopovereenkomst: ['Object & partijen', 'Kenmerken', 'Ontbindende voorwaarden', 'Clausules', 'Preview & export'],
-  samenlevingsovereenkomst: ['Partners', 'Vermogen & woning', 'Regelingen', 'Clausules', 'Preview & export'],
-  splitsingsakte: ['Gebouw & eigenaar', 'Kenmerken', 'Clausules', 'Preview & export', ''],
+  koopovereenkomst: ['Object & partijen', 'Kenmerken', 'Ontbindende voorwaarden', 'Clausules', 'Voorbeeld & export'],
+  samenlevingsovereenkomst: ['Partners', 'Vermogen & woning', 'Regelingen', 'Clausules', 'Voorbeeld & export'],
+  splitsingsakte: ['Gebouw & eigenaar', 'Kenmerken', 'Clausules', 'Voorbeeld & export', ''],
 }
 
 // Splitsingsakte has 4 steps (no step 3 separate from clausules)
@@ -246,8 +246,14 @@ export default function TransactiePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-slate-400">Laden...</p>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="flex items-center gap-3">
+          <svg className="w-5 h-5 text-nota-400 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          <p className="text-[var(--muted)] text-sm">Laden...</p>
+        </div>
       </div>
     )
   }
@@ -308,26 +314,37 @@ export default function TransactiePage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-[var(--border)] bg-white shadow-header sticky top-0 z-40">
+        <div className="max-w-4xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push('/')}
-              className="text-slate-400 hover:text-slate-600 transition-colors"
-              title="Terug naar home"
+              className="text-[var(--muted)] hover:text-nota-700 transition-colors duration-150 p-1 rounded-lg hover:bg-nota-50"
+              title="Terug naar overzicht"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
+            <div className="h-5 w-px bg-[var(--border)]" />
             <div>
-              <h1 className="text-lg font-semibold text-slate-900">NotaFlow</h1>
-              <p className="text-xs text-slate-400">{documentTypeLabels[documentType]}</p>
+              <h1 className="text-[15px] font-semibold text-nota-900 tracking-tight">NotaFlow</h1>
+              <p className="text-xs text-[var(--muted)]">{documentTypeLabels[documentType]}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            {saving && <span className="text-xs text-slate-400">Opslaan...</span>}
-            <span className="text-xs px-2 py-1 bg-slate-100 text-slate-500 rounded">Concept</span>
+          <div className="flex items-center gap-3">
+            {saving && (
+              <span className="text-xs text-[var(--muted)] flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Opslaan...
+              </span>
+            )}
+            <span className="text-xs px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md font-medium border border-amber-200">
+              Concept
+            </span>
           </div>
         </div>
       </header>
@@ -335,35 +352,44 @@ export default function TransactiePage() {
       <main className="max-w-4xl mx-auto px-6 py-8">
         <ProgressBar currentStep={step} steps={activeStepLabels} />
 
-        <div className="mt-8">
+        <div className="mt-10">
           {renderCurrentStep()}
         </div>
 
-        <div className="flex justify-between mt-10 pt-6 border-t border-slate-200">
+        <div className="flex justify-between mt-10 pt-6 border-t border-[var(--border)]">
           <button
             type="button"
             onClick={handleBack}
             disabled={step === 1}
-            className="px-5 py-2 text-sm text-slate-600 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-5 py-2.5 text-sm text-[var(--muted)] hover:text-nota-800 font-medium disabled:opacity-30 disabled:cursor-not-allowed rounded-lg hover:bg-white transition-all duration-150 flex items-center gap-1.5"
           >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
             Vorige
           </button>
           {step < maxSteps ? (
             <button
               type="button"
               onClick={handleNext}
-              className="px-6 py-2 text-sm bg-slate-800 hover:bg-slate-900 text-white rounded-lg transition-colors"
+              className="px-6 py-2.5 text-sm bg-nota-700 hover:bg-nota-800 text-white rounded-lg transition-colors duration-150 font-medium shadow-sm flex items-center gap-1.5"
             >
               Volgende
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </button>
           ) : (
             <button
               type="button"
               onClick={handleExport}
               disabled={exporting}
-              className="px-6 py-2 text-sm bg-slate-800 hover:bg-slate-900 text-white rounded-lg transition-colors disabled:opacity-50"
+              className="px-6 py-2.5 text-sm bg-nota-700 hover:bg-nota-800 text-white rounded-lg transition-colors duration-150 font-medium shadow-sm disabled:opacity-50 flex items-center gap-2"
             >
-              {exporting ? 'Exporteren...' : 'Download als Word'}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              {exporting ? 'Exporteren...' : 'Downloaden als Word'}
             </button>
           )}
         </div>

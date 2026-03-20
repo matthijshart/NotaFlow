@@ -56,7 +56,7 @@ export default function Home() {
             </svg>
           </div>
           <h1 className="text-3xl font-semibold text-slate-900 mb-2">NotaFlow</h1>
-          <p className="text-slate-500 text-lg">Akte Builder voor Notariskantoren</p>
+          <p className="text-slate-500 text-lg">Aktes opstellen voor notariskantoren</p>
           <p className="text-slate-400 text-sm mt-1">
             Genereer concept-akten voor woningen en samenwoners in Amsterdam
           </p>

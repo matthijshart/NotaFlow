@@ -226,6 +226,241 @@ De ingebrekestelling dient per aangetekende brief of per exploot van een deurwaa
   },
 ]
 
+const samenlevingsovereenkomstClausules = [
+  {
+    artikelnummer: 'Artikel 1',
+    naam: 'Partijen en begripsbepalingen',
+    categorie: 'SLO - Kernbepalingen',
+    tekst_template: `De ondergetekenden:
+
+1. {{partner1_naam}}, geboren te {{partner1_geboorteplaats}} op {{partner1_geboortedatum}}, wonende te {{partner1_adres}}, hierna te noemen: "partner 1";
+
+2. {{partner2_naam}}, geboren te {{partner2_geboorteplaats}} op {{partner2_geboortedatum}}, wonende te {{partner2_adres}}, hierna te noemen: "partner 2";
+
+hierna gezamenlijk te noemen: "partners" of "partijen";
+
+verklaren een samenlevingsovereenkomst aan te gaan onder de navolgende bepalingen.
+
+Onder deze overeenkomst wordt verstaan:
+a) "gemeenschappelijke huishouding": het gezamenlijk voorzien in de kosten van het dagelijks levensonderhoud;
+b) "samenlevingsovereenkomst": deze notariële akte met alle daarin opgenomen bepalingen;
+c) "partnerpensioen": een uitkering aan de langstlevende partner na overlijden van de andere partner.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 101,
+  },
+  {
+    artikelnummer: 'Artikel 2',
+    naam: 'Duur en beëindiging',
+    categorie: 'SLO - Kernbepalingen',
+    tekst_template: `Deze overeenkomst is aangegaan voor onbepaalde tijd en treedt in werking op {{ingangsdatum}}.
+
+De overeenkomst eindigt:
+a) door het overlijden van één van de partners;
+b) door het sluiten van een huwelijk of geregistreerd partnerschap tussen de partners;
+c) door schriftelijke opzegging door één van de partners of door beide partners gezamenlijk, met inachtneming van een opzegtermijn van één maand;
+d) door ontbinding bij rechterlijke uitspraak.
+
+De opzegging dient te geschieden bij aangetekende brief aan de andere partner, met gelijktijdige toezending van een afschrift aan de notaris die deze overeenkomst heeft verleden.
+
+Partners kunnen in onderling overleg nadere afspraken maken over de gevolgen van de beëindiging van de samenleving, welke afspraken schriftelijk worden vastgelegd.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 102,
+  },
+  {
+    artikelnummer: 'Artikel 3',
+    naam: 'Vermogensregeling',
+    categorie: 'SLO - Kernbepalingen',
+    tekst_template: `Tussen de partners bestaat geen gemeenschap van goederen in welke vorm dan ook. Iedere partner behoudt het eigen vermogen, waaronder begrepen de goederen die hij of zij ten tijde van het aangaan van deze overeenkomst bezit en de goederen die hij of zij nadien door verkrijging, schenking, erfenis of op andere wijze zal verkrijgen.
+
+Ten bewijze van ieders eigendom zullen de partners een staat van aanbrengsten opmaken en aan deze overeenkomst hechten als bijlage. Goederen die niet op de staat van aanbrengsten voorkomen en waarvan geen van de partners kan bewijzen dat zij hem of haar toebehoren, worden geacht aan ieder van de partners voor de onverdeelde helft toe te behoren.
+
+Partners zijn gehouden de staat van aanbrengsten periodiek te actualiseren.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 103,
+  },
+  {
+    artikelnummer: 'Artikel 4',
+    naam: 'Kosten van de huishouding',
+    categorie: 'SLO - Huishouding',
+    tekst_template: `Onder de kosten van de gemeenschappelijke huishouding worden onder meer verstaan:
+a) de huur of hypotheeklasten van de gemeenschappelijke woning, waaronder begrepen de rente en aflossing van de hypothecaire geldlening;
+b) de kosten van gas, water en elektriciteit;
+c) de premies van de gebruikelijke verzekeringen, waaronder de inboedelverzekering en de aansprakelijkheidsverzekering;
+d) de kosten van voeding en andere dagelijkse levensbehoeften;
+e) de gemeentelijke heffingen en belastingen ter zake van de gemeenschappelijke woning;
+f) de kosten van onderhoud van de gemeenschappelijke woning en de tuin.
+
+De partners dragen bij in de kosten van de gemeenschappelijke huishouding naar evenredigheid van hun netto-inkomsten. Onder netto-inkomen wordt verstaan het bruto-inkomen uit arbeid, onderneming of uitkering, verminderd met de daarover verschuldigde belasting en premies volksverzekeringen.
+
+Indien het inkomen van één van de partners ontoereikend is, worden de kosten gedragen door de andere partner.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 104,
+  },
+  {
+    artikelnummer: 'Artikel 5',
+    naam: 'Gemeenschappelijke bankrekening',
+    categorie: 'SLO - Huishouding',
+    tekst_template: `De partners openen een gemeenschappelijke bankrekening waaruit de kosten van de gemeenschappelijke huishouding worden voldaan.
+
+Iedere partner stort maandelijks, uiterlijk op de eerste werkdag van de maand, zijn of haar aandeel in de kosten op de gemeenschappelijke bankrekening. De hoogte van de maandelijkse bijdrage wordt jaarlijks vastgesteld op basis van de verwachte kosten en de verhouding van de netto-inkomsten van de partners.
+
+Een eventueel tekort op de gemeenschappelijke bankrekening wordt door de partners aangevuld naar evenredigheid van hun netto-inkomsten. Een eventueel overschot aan het einde van het kalenderjaar komt aan ieder van de partners toe voor de onverdeelde helft.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 105,
+  },
+  {
+    artikelnummer: 'Artikel 6',
+    naam: 'Gemeenschappelijke woning - huur',
+    categorie: 'SLO - Woning',
+    tekst_template: `De gemeenschappelijke woning van partners is gelegen aan {{gezamenlijk_adres}} en wordt bewoond op basis van een huurovereenkomst.
+
+De huurovereenkomst is gesloten op naam van {{huurder_naam}}. De partners dragen gezamenlijk bij in de huurlasten overeenkomstig het bepaalde in artikel 4 van deze overeenkomst.
+
+Bij beëindiging van de samenleving heeft de partner op wiens naam de huurovereenkomst staat het recht in de woning te blijven. Indien de huurovereenkomst op naam van beide partners staat, zullen zij in onderling overleg bepalen wie van hen in de woning blijft, of zullen zij de huurovereenkomst gezamenlijk opzeggen.`,
+    trigger_conditie: '{"woning_type":"huur"}',
+    type: 'conditioneel',
+    volgorde: 106,
+  },
+  {
+    artikelnummer: 'Artikel 6',
+    naam: 'Gemeenschappelijke woning - koop (gezamenlijk eigendom)',
+    categorie: 'SLO - Woning',
+    tekst_template: `De gemeenschappelijke woning van partners is gelegen aan {{gezamenlijk_adres}} en is eigendom van beide partners, ieder voor de onverdeelde helft.
+
+De aan de woning verbonden hypotheeklasten, eigenaarslasten en kosten van onderhoud worden door de partners gezamenlijk gedragen overeenkomstig het bepaalde in artikel 4 van deze overeenkomst.
+
+Bij beëindiging van de samenleving zullen de partners in onderling overleg bepalen:
+a) of één van hen de woning overneemt tegen betaling van de helft van de op dat moment geldende marktwaarde aan de andere partner, verminderd met de helft van de alsdan nog openstaande hypothecaire schuld; of
+b) of de woning wordt verkocht en de opbrengst, na aftrek van verkoopkosten en aflossing van de hypothecaire schuld, bij helfte wordt verdeeld.
+
+De marktwaarde wordt vastgesteld door een door de partners gezamenlijk aan te wijzen onafhankelijke taxateur. Indien de partners geen overeenstemming bereiken over de keuze van de taxateur, wordt deze benoemd door de voorzitter van de Kamer van Notarissen.`,
+    trigger_conditie: '{"woning_type":"koop_gezamenlijk"}',
+    type: 'conditioneel',
+    volgorde: 107,
+  },
+  {
+    artikelnummer: 'Artikel 6',
+    naam: 'Gemeenschappelijke woning - koop (één eigenaar)',
+    categorie: 'SLO - Woning',
+    tekst_template: `De gemeenschappelijke woning van partners is gelegen aan {{gezamenlijk_adres}} en is eigendom van {{eigenaar_naam}}.
+
+De niet-eigenaar partner is gerechtigd de woning te bewonen gedurende de samenleving. De aan de woning verbonden lasten worden door de partners gedragen overeenkomstig het bepaalde in artikel 4 van deze overeenkomst. De bijdrage van de niet-eigenaar partner aan de hypotheeklasten wordt aangemerkt als bijdrage in de kosten van de gemeenschappelijke huishouding en geeft geen recht op een aandeel in de eigendom of de waardestijging van de woning, tenzij partijen hierover afzonderlijke afspraken maken.
+
+Bij beëindiging van de samenleving is de niet-eigenaar partner gehouden de woning te verlaten binnen drie maanden na de beëindiging, of zoveel eerder of later als partijen in onderling overleg overeenkomen.`,
+    trigger_conditie: '{"woning_type":"koop_een_eigenaar"}',
+    type: 'conditioneel',
+    volgorde: 108,
+  },
+  {
+    artikelnummer: 'Artikel 7',
+    naam: 'Inboedel',
+    categorie: 'SLO - Goederen',
+    tekst_template: `De inboedel van de gemeenschappelijke woning die door de partners gezamenlijk is aangeschaft, behoort aan ieder van de partners voor de onverdeelde helft toe, tenzij uit de staat van aanbrengsten of uit bewijsstukken het tegendeel blijkt.
+
+Bij beëindiging van de samenleving vindt verdeling van de gemeenschappelijke inboedel plaats in onderling overleg. Goederen waarvan de eigendom niet kan worden vastgesteld, worden bij helfte verdeeld.
+
+Ieder van de partners behoudt de inboedelgoederen die hij of zij als eigen goederen heeft ingebracht, zoals vermeld op de staat van aanbrengsten.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 109,
+  },
+  {
+    artikelnummer: 'Artikel 8',
+    naam: 'Partnerpensioen',
+    categorie: 'SLO - Pensioen en overlijden',
+    tekst_template: `De partners verplichten zich over en weer om elkaar, voor zover de door hen getroffen pensioenregelingen of de van toepassing zijnde pensioenreglementen dat toestaan, als begunstigde voor het partnerpensioen aan te wijzen.
+
+Indien een partner deelneemt aan een pensioenregeling die voorziet in een partnerpensioen voor een ongehuwd samenwonende partner, zal die partner de andere partner als zodanig aanmelden bij het betreffende pensioenfonds of de betreffende pensioenverzekeraar.
+
+De partners zullen bij beëindiging van de samenleving in onderling overleg bepalen of en in hoeverre de aanwijzing als begunstigde voor het partnerpensioen wordt gehandhaafd, en zijn gehouden daarvan mededeling te doen aan het pensioenfonds of de pensioenverzekeraar.`,
+    trigger_conditie: '{"partnerpensioen":true}',
+    type: 'conditioneel',
+    volgorde: 110,
+  },
+  {
+    artikelnummer: 'Artikel 9',
+    naam: 'Verblijvingsbeding',
+    categorie: 'SLO - Pensioen en overlijden',
+    tekst_template: `De partners komen overeen dat bij overlijden van één van hen de gezamenlijke goederen — waaronder begrepen het aandeel in de gemeenschappelijke woning indien deze aan beide partners toebehoort, de gemeenschappelijke inboedel en het saldo van de gemeenschappelijke bankrekening — zullen toevallen aan de langstlevende partner, onder de verplichting alle gemeenschappelijke schulden voor zijn of haar rekening te nemen.
+
+Dit verblijvingsbeding wordt aangegaan onder de ontbindende voorwaarde dat de samenlevingsovereenkomst vóór het overlijden is beëindigd.
+
+De partners zijn zich ervan bewust dat dit verblijvingsbeding leidt tot een verkrijging krachtens overeenkomst die is belast met erfbelasting op grond van de Successiewet 1956. De langstlevende partner is gehouden deze erfbelasting te voldoen.
+
+Het verblijvingsbeding laat onverlet ieders bevoegdheid bij uiterste wil over zijn of haar eigen (niet-gemeenschappelijke) goederen te beschikken.`,
+    trigger_conditie: '{"verblijvingsbeding":true}',
+    type: 'conditioneel',
+    volgorde: 111,
+  },
+  {
+    artikelnummer: 'Artikel 10',
+    naam: 'Onderhoudsverplichting na beëindiging',
+    categorie: 'SLO - Beëindiging',
+    tekst_template: `Bij beëindiging van de samenleving anders dan door overlijden, verplicht de partner met het hoogste netto-inkomen zich om gedurende een periode van {{alimentatieduur_maanden}} maanden na beëindiging bij te dragen in het levensonderhoud van de andere partner, indien en voor zover die andere partner niet in eigen levensonderhoud kan voorzien.
+
+De hoogte van de bijdrage wordt vastgesteld met inachtneming van de draagkracht van de onderhoudsplichtige partner en de behoefte van de onderhoudsgerechtigde partner, overeenkomstig de maatstaven die in het familierecht gebruikelijk zijn.
+
+De onderhoudsverplichting eindigt:
+a) door het verstrijken van de overeengekomen termijn;
+b) door het overlijden van één van de partners;
+c) indien de onderhoudsgerechtigde partner gaat samenwonen met een andere partner, een huwelijk of geregistreerd partnerschap aangaat;
+d) indien de onderhoudsgerechtigde partner zelfstandig in eigen levensonderhoud kan voorzien.`,
+    trigger_conditie: '{"onderhoudsverplichting":true}',
+    type: 'conditioneel',
+    volgorde: 112,
+  },
+  {
+    artikelnummer: 'Artikel 11',
+    naam: 'Fiscaal partnerschap',
+    categorie: 'SLO - Fiscale bepalingen',
+    tekst_template: `De partners verklaren ermee bekend te zijn dat zij door het voeren van een gemeenschappelijke huishouding voor de toepassing van de inkomstenbelasting als fiscale partners kunnen worden aangemerkt, mits zij aan de wettelijke voorwaarden voldoen, waaronder inschrijving op hetzelfde woonadres in de Basisregistratie Personen.
+
+De partners komen overeen jaarlijks in onderling overleg de onderlinge verdeling van de gemeenschappelijke inkomensbestanddelen en aftrekposten vast te stellen, op een wijze die fiscaal het meest voordelig is voor de partners gezamenlijk.
+
+Partners zijn gehouden elkaar de voor de belastingaangifte benodigde gegevens tijdig te verstrekken.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 113,
+  },
+  {
+    artikelnummer: 'Artikel 12',
+    naam: 'Geschillenregeling',
+    categorie: 'SLO - Slotbepalingen',
+    tekst_template: `Geschillen die voortvloeien uit of verband houden met deze overeenkomst zullen in eerste instantie in onderling overleg worden opgelost.
+
+Indien het geschil niet in onderling overleg kan worden opgelost, verbinden de partners zich het geschil voor te leggen aan een door hen gezamenlijk aan te wijzen mediator, alvorens het geschil aan de rechter voor te leggen.
+
+De kosten van mediation worden door de partners bij helfte gedragen, tenzij de mediator anders bepaalt.
+
+Indien ook mediation niet leidt tot een oplossing, is de bevoegde rechter in het arrondissement waarin de gemeenschappelijke woning is gelegen bevoegd van het geschil kennis te nemen.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 114,
+  },
+  {
+    artikelnummer: 'Artikel 13',
+    naam: 'Slotbepalingen',
+    categorie: 'SLO - Slotbepalingen',
+    tekst_template: `Op deze overeenkomst is het Nederlands recht van toepassing.
+
+Wijzigingen van of aanvullingen op deze overeenkomst zijn slechts geldig indien zij bij notariële akte zijn vastgelegd.
+
+Deze overeenkomst zal worden ingeschreven in het Centraal Gezagsregister bij de rechtbank van het arrondissement waarin de gemeenschappelijke woning is gelegen, teneinde derdenwerking te verkrijgen.
+
+Van deze akte wordt een afschrift verstrekt aan ieder van de partners.
+
+Partners verklaren de inhoud van deze akte te begrijpen en hiermee in te stemmen.`,
+    trigger_conditie: '{}',
+    type: 'standaard',
+    volgorde: 115,
+  },
+]
+
 async function main() {
   // Clear existing clausules
   await prisma.transactieClausule.deleteMany()
@@ -236,7 +471,12 @@ async function main() {
     await prisma.clausule.create({ data: clausule })
   }
 
-  console.log(`Seeded ${clausules.length} clausules`)
+  for (const clausule of samenlevingsovereenkomstClausules) {
+    await prisma.clausule.create({ data: clausule })
+  }
+
+  const total = clausules.length + samenlevingsovereenkomstClausules.length
+  console.log(`Seeded ${total} clausules (${clausules.length} koopovereenkomst + ${samenlevingsovereenkomstClausules.length} samenlevingsovereenkomst)`)
 }
 
 main()

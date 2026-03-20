@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import {
   TransactieFormData,
   TransactieClausuleData,
@@ -9,6 +10,7 @@ import {
   documentTypeLabels,
 } from '@/lib/types'
 import { renderClausuleTekstWithHighlights } from '@/lib/clausule-engine'
+import { generatePdf } from '@/lib/pdf-export'
 
 interface Props {
   formData: TransactieFormData
@@ -155,6 +157,23 @@ function SplitsingFooter({ data }: { data: SplitsingsakteFormData }) {
 export default function Step5Preview({ formData, transactieClausules, onExport, exporting }: Props) {
   const activeClausules = transactieClausules.filter(tc => tc.actief)
   const docLabel = documentTypeLabels[formData.document_type]
+  const previewRef = useRef<HTMLDivElement>(null)
+  const [exportingPdf, setExportingPdf] = useState(false)
+
+  async function handlePdfExport() {
+    if (!previewRef.current) return
+    setExportingPdf(true)
+    try {
+      const adres = ('adres' in formData ? formData.adres : '') || 'concept'
+      const label = docLabel.toLowerCase()
+      const fileName = `${label}-${adres}.pdf`
+        .replace(/[^a-zA-Z0-9.\- ]/g, '')
+        .replace(/\s+/g, '-')
+      await generatePdf(previewRef.current, fileName)
+    } finally {
+      setExportingPdf(false)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -162,24 +181,51 @@ export default function Step5Preview({ formData, transactieClausules, onExport, 
         <div>
           <h2 className="text-lg font-semibold text-nota-900 mb-1">Voorbeeld & exporteren</h2>
           <p className="text-sm text-[var(--muted)]">
-            Controleer de concept-{docLabel.toLowerCase()} en exporteer als Word-document
+            Controleer de concept-{docLabel.toLowerCase()} en exporteer als Word of PDF
           </p>
         </div>
-        <button
-          type="button"
-          onClick={onExport}
-          disabled={exporting}
-          className="bg-nota-700 hover:bg-nota-800 text-white font-medium py-2.5 px-5 rounded-lg transition-colors duration-150 text-sm disabled:opacity-50 flex items-center gap-2 shadow-sm"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          {exporting ? 'Exporteren...' : 'Downloaden als Word'}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onExport}
+            disabled={exporting || exportingPdf}
+            className="bg-nota-700 hover:bg-nota-800 text-white font-medium py-2.5 px-5 rounded-lg transition-colors duration-150 text-sm disabled:opacity-50 flex items-center gap-2 shadow-sm"
+          >
+            {exporting ? (
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            )}
+            {exporting ? 'Exporteren...' : 'Word'}
+          </button>
+          <button
+            type="button"
+            onClick={handlePdfExport}
+            disabled={exporting || exportingPdf}
+            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-5 rounded-lg transition-colors duration-150 text-sm disabled:opacity-50 flex items-center gap-2 shadow-sm"
+          >
+            {exportingPdf ? (
+              <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+            )}
+            {exportingPdf ? 'Exporteren...' : 'PDF'}
+          </button>
+        </div>
       </div>
 
       <div className="bg-white rounded-xl border border-[var(--border)] shadow-card">
-        <div className="p-8 md:p-12 max-w-3xl mx-auto legal-text">
+        <div ref={previewRef} className="p-8 md:p-12 max-w-3xl mx-auto legal-text">
           {formData.document_type === 'koopovereenkomst' && <KoopHeader data={formData} />}
           {formData.document_type === 'samenlevingsovereenkomst' && <SamenlevingHeader data={formData} />}
           {formData.document_type === 'splitsingsakte' && <SplitsingHeader data={formData} />}

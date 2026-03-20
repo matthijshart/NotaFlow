@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { saveAs } from 'file-saver'
 import ProgressBar from '@/components/ProgressBar'
 import Step1ObjectPartijen from '@/components/Step1ObjectPartijen'
@@ -15,6 +15,7 @@ import { generateDocx } from '@/lib/docx-export'
 
 export default function TransactiePage() {
   const params = useParams()
+  const router = useRouter()
   const id = params.id as string
 
   const [step, setStep] = useState(1)
@@ -164,9 +165,20 @@ export default function TransactiePage() {
       {/* Header */}
       <header className="border-b border-gray-200 bg-white">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-lg font-semibold text-gray-900">NotaFlow</h1>
-            <p className="text-xs text-gray-400">Koopovereenkomst Builder</p>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => router.push('/')}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+              title="Terug naar home"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <div>
+              <h1 className="text-lg font-semibold text-gray-900">NotaFlow</h1>
+              <p className="text-xs text-gray-400">Koopovereenkomst Builder</p>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             {saving && <span className="text-xs text-gray-400">Opslaan...</span>}

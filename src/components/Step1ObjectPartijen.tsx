@@ -1,6 +1,7 @@
 'use client'
 
 import { TransactieFormData } from '@/lib/types'
+import AdresAutocomplete from './AdresAutocomplete'
 
 const objectTypes = [
   { value: 'eengezinswoning', label: 'Eengezinswoning' },
@@ -45,16 +46,13 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
 
       {/* Adres */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Adres</label>
-          <input
-            type="text"
-            value={formData.adres}
-            onChange={(e) => onChange({ adres: e.target.value })}
-            placeholder="Keizersgracht 100, 1015 AA Amsterdam"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-          />
-        </div>
+        <AdresAutocomplete
+          value={formData.adres}
+          onChange={(val) => onChange({ adres: val })}
+          onSelect={(adres, kadastraal) =>
+            onChange({ adres, kadastrale_aanduiding: kadastraal || formData.kadastrale_aanduiding })
+          }
+        />
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Kadastrale aanduiding</label>
           <input
@@ -64,6 +62,9 @@ export default function Step1ObjectPartijen({ formData, onChange }: Props) {
             placeholder="ASD04 K 1234 A-1"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
+          {formData.kadastrale_aanduiding && (
+            <p className="text-xs text-teal-600 mt-1">Automatisch ingevuld vanuit PDOK</p>
+          )}
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { TransactieFormData } from '@/lib/types'
+import { KoopovereenkomstFormData } from '@/lib/types'
 import AdresAutocomplete from './AdresAutocomplete'
 
 const objectTypes = [
@@ -11,8 +11,8 @@ const objectTypes = [
 ] as const
 
 interface Props {
-  formData: TransactieFormData
-  onChange: (data: Partial<TransactieFormData>) => void
+  formData: KoopovereenkomstFormData
+  onChange: (data: Partial<KoopovereenkomstFormData>) => void
 }
 
 export default function Step1ObjectPartijen({ formData, onChange }: Props) {

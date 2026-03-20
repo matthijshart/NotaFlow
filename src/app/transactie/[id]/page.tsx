@@ -9,9 +9,58 @@ import Step2Kenmerken from '@/components/Step2Kenmerken'
 import Step3Voorwaarden from '@/components/Step3Voorwaarden'
 import Step4Clausules from '@/components/Step4Clausules'
 import Step5Preview from '@/components/Step5Preview'
-import { TransactieFormData, TransactieClausuleData, ClausuleData, defaultFormData } from '@/lib/types'
+import Step1Partners from '@/components/samenleving/Step1Partners'
+import Step2Vermogen from '@/components/samenleving/Step2Vermogen'
+import Step3Regelingen from '@/components/samenleving/Step3Regelingen'
+import Step1Gebouw from '@/components/splitsing/Step1Gebouw'
+import Step2SplitsingKenmerken from '@/components/splitsing/Step2Kenmerken'
+import {
+  TransactieFormData,
+  TransactieClausuleData,
+  ClausuleData,
+  DocumentType,
+  KoopovereenkomstFormData,
+  SamenlevingsovereenkomstFormData,
+  SplitsingsakteFormData,
+  getDefaultFormData,
+  documentTypeLabels,
+} from '@/lib/types'
 import { shouldClausuleBeActive } from '@/lib/clausule-engine'
 import { generateDocx } from '@/lib/docx-export'
+
+const stepsConfig: Record<DocumentType, string[]> = {
+  koopovereenkomst: ['Object & partijen', 'Kenmerken', 'Ontbindende voorwaarden', 'Clausules', 'Preview & export'],
+  samenlevingsovereenkomst: ['Partners', 'Vermogen & woning', 'Regelingen', 'Clausules', 'Preview & export'],
+  splitsingsakte: ['Gebouw & eigenaar', 'Kenmerken', 'Clausules', 'Preview & export', ''],
+}
+
+// Splitsingsakte has 4 steps (no step 3 separate from clausules)
+const totalSteps: Record<DocumentType, number> = {
+  koopovereenkomst: 5,
+  samenlevingsovereenkomst: 5,
+  splitsingsakte: 4,
+}
+
+// Which step triggers clausule sync (the step before clausules)
+const clausuleSyncStep: Record<DocumentType, number> = {
+  koopovereenkomst: 3,
+  samenlevingsovereenkomst: 3,
+  splitsingsakte: 2,
+}
+
+// Which step shows clausules
+const clausuleStep: Record<DocumentType, number> = {
+  koopovereenkomst: 4,
+  samenlevingsovereenkomst: 4,
+  splitsingsakte: 3,
+}
+
+// Which step shows preview
+const previewStep: Record<DocumentType, number> = {
+  koopovereenkomst: 5,
+  samenlevingsovereenkomst: 5,
+  splitsingsakte: 4,
+}
 
 export default function TransactiePage() {
   const params = useParams()
@@ -19,61 +68,101 @@ export default function TransactiePage() {
   const id = params.id as string
 
   const [step, setStep] = useState(1)
-  const [formData, setFormData] = useState<TransactieFormData>(defaultFormData)
+  const [documentType, setDocumentType] = useState<DocumentType>('koopovereenkomst')
+  const [formData, setFormData] = useState<TransactieFormData>(getDefaultFormData('koopovereenkomst'))
   const [transactieClausules, setTransactieClausules] = useState<TransactieClausuleData[]>([])
   const [alleClausules, setAlleClausules] = useState<ClausuleData[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [exporting, setExporting] = useState(false)
 
-  // Load transaction and all clausules
   useEffect(() => {
-    Promise.all([
-      fetch(`/api/transacties/${id}`).then(r => r.json()),
-      fetch('/api/clausules').then(r => r.json()),
-    ]).then(([transactie, clausules]) => {
-      setFormData({
-        type_object: transactie.type_object,
-        adres: transactie.adres,
-        kadastrale_aanduiding: transactie.kadastrale_aanduiding,
-        verkoper_naam: transactie.verkoper_naam,
-        koper_naam: transactie.koper_naam,
-        koopprijs: transactie.koopprijs,
-        leveringsdatum: transactie.leveringsdatum,
-        vve: transactie.vve,
-        erfpacht: transactie.erfpacht,
-        erfpacht_type: transactie.erfpacht_type,
-        bouwjaar_voor_1992: transactie.bouwjaar_voor_1992,
-        bouwtechnische_keuring: transactie.bouwtechnische_keuring,
-        energielabel: transactie.energielabel,
-        financieringsvoorbehoud: transactie.financieringsvoorbehoud,
-        financieringstermijn_weken: transactie.financieringstermijn_weken,
-        nhg: transactie.nhg,
-        bouwkundig_voorbehoud: transactie.bouwkundig_voorbehoud,
-        huisvestingsvergunning: transactie.huisvestingsvergunning,
-      })
+    fetch(`/api/transacties/${id}`).then(r => r.json()).then((transactie) => {
+      const docType = (transactie.document_type || 'koopovereenkomst') as DocumentType
+      setDocumentType(docType)
+
+      // Parse extra_data for non-koopovereenkomst types
+      const extraData = transactie.extra_data ? JSON.parse(transactie.extra_data) : {}
+
+      if (docType === 'koopovereenkomst') {
+        setFormData({
+          document_type: 'koopovereenkomst',
+          type_object: transactie.type_object,
+          adres: transactie.adres,
+          kadastrale_aanduiding: transactie.kadastrale_aanduiding,
+          verkoper_naam: transactie.verkoper_naam,
+          koper_naam: transactie.koper_naam,
+          koopprijs: transactie.koopprijs,
+          leveringsdatum: transactie.leveringsdatum,
+          vve: transactie.vve,
+          erfpacht: transactie.erfpacht,
+          erfpacht_type: transactie.erfpacht_type,
+          bouwjaar_voor_1992: transactie.bouwjaar_voor_1992,
+          bouwtechnische_keuring: transactie.bouwtechnische_keuring,
+          energielabel: transactie.energielabel,
+          financieringsvoorbehoud: transactie.financieringsvoorbehoud,
+          financieringstermijn_weken: transactie.financieringstermijn_weken,
+          nhg: transactie.nhg,
+          bouwkundig_voorbehoud: transactie.bouwkundig_voorbehoud,
+          huisvestingsvergunning: transactie.huisvestingsvergunning,
+        })
+      } else if (docType === 'samenlevingsovereenkomst') {
+        const defaults = getDefaultFormData('samenlevingsovereenkomst') as SamenlevingsovereenkomstFormData
+        setFormData({ ...defaults, ...extraData, document_type: 'samenlevingsovereenkomst' })
+      } else if (docType === 'splitsingsakte') {
+        const defaults = getDefaultFormData('splitsingsakte') as SplitsingsakteFormData
+        setFormData({
+          ...defaults,
+          ...extraData,
+          document_type: 'splitsingsakte',
+          adres: extraData.adres || transactie.adres || '',
+          kadastrale_aanduiding: extraData.kadastrale_aanduiding || transactie.kadastrale_aanduiding || '',
+          erfpacht: extraData.erfpacht ?? transactie.erfpacht ?? false,
+          erfpacht_type: extraData.erfpacht_type || transactie.erfpacht_type || 'eeuwigdurend',
+        })
+      }
+
       setTransactieClausules(transactie.clausules || [])
-      setAlleClausules(clausules)
+
+      // Load clausules for this document type
+      fetch(`/api/clausules?document_type=${docType}`).then(r => r.json()).then(setAlleClausules)
+
       setLoading(false)
     })
   }, [id])
 
   function handleChange(partial: Partial<TransactieFormData>) {
-    setFormData(prev => ({ ...prev, ...partial }))
+    setFormData(prev => ({ ...prev, ...partial } as TransactieFormData))
   }
 
-  // Save transaction data to server
   const saveTransaction = useCallback(async (data: TransactieFormData) => {
     setSaving(true)
-    await fetch(`/api/transacties/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
+
+    if (data.document_type === 'koopovereenkomst') {
+      const { document_type, ...rest } = data as KoopovereenkomstFormData
+      await fetch(`/api/transacties/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ document_type, ...rest }),
+      })
+    } else {
+      // Store document-type-specific data in extra_data
+      const { document_type, ...rest } = data
+      await fetch(`/api/transacties/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          document_type,
+          extra_data: rest,
+          // Also store adres in main field for display
+          ...(('adres' in rest) && { adres: (rest as Record<string, unknown>).adres }),
+        }),
+      })
+    }
+
     setSaving(false)
   }, [id])
 
-  // Sync clausules based on form data
   const syncClausules = useCallback(async (data: TransactieFormData) => {
     const activeIds = alleClausules
       .filter(c => shouldClausuleBeActive(c, data))
@@ -88,15 +177,16 @@ export default function TransactiePage() {
     setTransactieClausules(updated)
   }, [id, alleClausules])
 
+  const maxSteps = totalSteps[documentType]
+
   async function handleNext() {
     await saveTransaction(formData)
 
-    if (step === 3) {
-      // When moving to step 4, sync clausules based on form data
+    if (step === clausuleSyncStep[documentType]) {
       await syncClausules(formData)
     }
 
-    setStep(prev => Math.min(prev + 1, 5))
+    setStep(prev => Math.min(prev + 1, maxSteps))
   }
 
   function handleBack() {
@@ -143,7 +233,9 @@ export default function TransactiePage() {
     setExporting(true)
     try {
       const blob = await generateDocx(formData, transactieClausules)
-      const fileName = `koopovereenkomst-${formData.adres || 'concept'}.docx`
+      const label = documentTypeLabels[documentType].toLowerCase()
+      const adres = ('adres' in formData ? formData.adres : '') || 'concept'
+      const fileName = `${label}-${adres}.docx`
         .replace(/[^a-zA-Z0-9.\-_ ]/g, '')
         .replace(/\s+/g, '-')
       saveAs(blob, fileName)
@@ -160,9 +252,62 @@ export default function TransactiePage() {
     )
   }
 
+  const activeStepLabels = stepsConfig[documentType].filter(s => s !== '')
+
+  function renderCurrentStep() {
+    const isClausuleStep = step === clausuleStep[documentType]
+    const isPreviewStep = step === previewStep[documentType]
+
+    if (isClausuleStep) {
+      return (
+        <Step4Clausules
+          formData={formData}
+          transactieClausules={transactieClausules}
+          alleClausules={alleClausules}
+          onToggleClausule={handleToggleClausule}
+          onEditClausule={handleEditClausule}
+          onAddClausule={handleAddClausule}
+        />
+      )
+    }
+
+    if (isPreviewStep) {
+      return (
+        <Step5Preview
+          formData={formData}
+          transactieClausules={transactieClausules}
+          onExport={handleExport}
+          exporting={exporting}
+        />
+      )
+    }
+
+    // Document-type-specific steps
+    if (documentType === 'koopovereenkomst') {
+      const koop = formData as KoopovereenkomstFormData
+      if (step === 1) return <Step1ObjectPartijen formData={koop} onChange={handleChange} />
+      if (step === 2) return <Step2Kenmerken formData={koop} onChange={handleChange} />
+      if (step === 3) return <Step3Voorwaarden formData={koop} onChange={handleChange} />
+    }
+
+    if (documentType === 'samenlevingsovereenkomst') {
+      const sam = formData as SamenlevingsovereenkomstFormData
+      if (step === 1) return <Step1Partners formData={sam} onChange={handleChange} />
+      if (step === 2) return <Step2Vermogen formData={sam} onChange={handleChange} />
+      if (step === 3) return <Step3Regelingen formData={sam} onChange={handleChange} />
+    }
+
+    if (documentType === 'splitsingsakte') {
+      const split = formData as SplitsingsakteFormData
+      if (step === 1) return <Step1Gebouw formData={split} onChange={handleChange} />
+      if (step === 2) return <Step2SplitsingKenmerken formData={split} onChange={handleChange} />
+    }
+
+    return null
+  }
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      {/* Header */}
       <header className="border-b border-gray-200 bg-white">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -177,7 +322,7 @@ export default function TransactiePage() {
             </button>
             <div>
               <h1 className="text-lg font-semibold text-gray-900">NotaFlow</h1>
-              <p className="text-xs text-gray-400">Koopovereenkomst Builder</p>
+              <p className="text-xs text-gray-400">{documentTypeLabels[documentType]}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -187,35 +332,13 @@ export default function TransactiePage() {
         </div>
       </header>
 
-      {/* Main content */}
       <main className="max-w-4xl mx-auto px-6 py-8">
-        <ProgressBar currentStep={step} />
+        <ProgressBar currentStep={step} steps={activeStepLabels} />
 
         <div className="mt-8">
-          {step === 1 && <Step1ObjectPartijen formData={formData} onChange={handleChange} />}
-          {step === 2 && <Step2Kenmerken formData={formData} onChange={handleChange} />}
-          {step === 3 && <Step3Voorwaarden formData={formData} onChange={handleChange} />}
-          {step === 4 && (
-            <Step4Clausules
-              formData={formData}
-              transactieClausules={transactieClausules}
-              alleClausules={alleClausules}
-              onToggleClausule={handleToggleClausule}
-              onEditClausule={handleEditClausule}
-              onAddClausule={handleAddClausule}
-            />
-          )}
-          {step === 5 && (
-            <Step5Preview
-              formData={formData}
-              transactieClausules={transactieClausules}
-              onExport={handleExport}
-              exporting={exporting}
-            />
-          )}
+          {renderCurrentStep()}
         </div>
 
-        {/* Navigation */}
         <div className="flex justify-between mt-10 pt-6 border-t border-gray-200">
           <button
             type="button"
@@ -225,7 +348,7 @@ export default function TransactiePage() {
           >
             Vorige
           </button>
-          {step < 5 ? (
+          {step < maxSteps ? (
             <button
               type="button"
               onClick={handleNext}

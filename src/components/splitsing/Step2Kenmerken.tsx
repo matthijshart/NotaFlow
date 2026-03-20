@@ -1,10 +1,10 @@
 'use client'
 
-import { KoopovereenkomstFormData } from '@/lib/types'
+import { SplitsingsakteFormData } from '@/lib/types'
 
 interface Props {
-  formData: KoopovereenkomstFormData
-  onChange: (data: Partial<KoopovereenkomstFormData>) => void
+  formData: SplitsingsakteFormData
+  onChange: (data: Partial<SplitsingsakteFormData>) => void
 }
 
 function Toggle({
@@ -47,23 +47,16 @@ export default function Step2Kenmerken({ formData, onChange }: Props) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">Kenmerken object</h2>
+        <h2 className="text-lg font-semibold text-gray-900 mb-1">Kenmerken gebouw</h2>
         <p className="text-sm text-gray-500">
-          Deze kenmerken bepalen welke clausules worden geactiveerd
+          Eigenschappen die de inhoud van de splitsingsakte bepalen
         </p>
       </div>
 
       <div className="bg-white rounded-lg border border-gray-200 px-5">
         <Toggle
-          label="VvE van toepassing?"
-          description="Activeert clausules over Vereniging van Eigenaars"
-          checked={formData.vve}
-          onChange={(val) => onChange({ vve: val })}
-        />
-
-        <Toggle
           label="Erfpacht?"
-          description="Activeert erfpachtclausules"
+          description="Het gebouw staat op erfpachtgrond van de gemeente Amsterdam"
           checked={formData.erfpacht}
           onChange={(val) => onChange({ erfpacht: val })}
         />
@@ -89,27 +82,14 @@ export default function Step2Kenmerken({ formData, onChange }: Props) {
             </div>
           </div>
         )}
+      </div>
 
-        <Toggle
-          label="Bouwjaar vóór 1992?"
-          description="Activeert ouderdomsclausule en asbestbepaling"
-          checked={formData.bouwjaar_voor_1992}
-          onChange={(val) => onChange({ bouwjaar_voor_1992: val })}
-        />
-
-        <Toggle
-          label="Bouwtechnische keuring uitgevoerd?"
-          description="Voegt keuringsrapport-clausule toe"
-          checked={formData.bouwtechnische_keuring}
-          onChange={(val) => onChange({ bouwtechnische_keuring: val })}
-        />
-
-        <Toggle
-          label="Energielabel beschikbaar?"
-          description="Energielabel-clausule"
-          checked={formData.energielabel}
-          onChange={(val) => onChange({ energielabel: val })}
-        />
+      <div className="bg-gray-50 rounded-lg border border-gray-200 p-4">
+        <p className="text-sm text-gray-600">
+          <strong>Let op:</strong> De splitsingsakte bevat standaard alle benodigde artikelen voor de VvE-oprichting,
+          breukdelen, gemeenschappelijke en privé-gedeelten, en het huishoudelijk reglement.
+          In stap 4 kunt u clausules bekijken en aanpassen.
+        </p>
       </div>
     </div>
   )

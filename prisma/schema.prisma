@@ -11,34 +11,37 @@ model Transactie {
   id                      String   @id @default(cuid())
   aangemaakt_op           DateTime @default(now())
   status                  String   @default("concept")
+  document_type           String   @default("koopovereenkomst") // koopovereenkomst, samenlevingsovereenkomst, splitsingsakte
 
+  // Koopovereenkomst fields
   adres                   String   @default("")
   kadastrale_aanduiding   String   @default("")
   type_object             String   @default("eengezinswoning")
-
   verkoper_naam           String   @default("")
   koper_naam              String   @default("")
   koopprijs               Int      @default(0)
   leveringsdatum          String   @default("")
-
   vve                     Boolean  @default(false)
   erfpacht                Boolean  @default(false)
   erfpacht_type           String   @default("eeuwigdurend")
   bouwjaar_voor_1992      Boolean  @default(false)
   bouwtechnische_keuring  Boolean  @default(false)
   energielabel            Boolean  @default(false)
-
   financieringsvoorbehoud Boolean  @default(false)
   financieringstermijn_weken Int   @default(6)
   nhg                     Boolean  @default(false)
   bouwkundig_voorbehoud   Boolean  @default(false)
   huisvestingsvergunning  Boolean  @default(false)
 
+  // Flexible JSON field for document-type-specific data
+  extra_data              String   @default("{}")
+
   clausules               TransactieClausule[]
 }
 
 model Clausule {
   id                String   @id @default(cuid())
+  document_type     String   @default("koopovereenkomst")
   artikelnummer     String
   naam              String
   categorie         String

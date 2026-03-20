@@ -1,10 +1,10 @@
 'use client'
 
-import { TransactieFormData } from '@/lib/types'
+import { KoopovereenkomstFormData } from '@/lib/types'
 
 interface Props {
-  formData: TransactieFormData
-  onChange: (data: Partial<TransactieFormData>) => void
+  formData: KoopovereenkomstFormData
+  onChange: (data: Partial<KoopovereenkomstFormData>) => void
 }
 
 function Toggle({

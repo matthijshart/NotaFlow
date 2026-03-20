@@ -1,14 +1,11 @@
 'use client'
 
-const steps = [
-  'Object & partijen',
-  'Kenmerken',
-  'Ontbindende voorwaarden',
-  'Clausules',
-  'Preview & export',
-]
+interface Props {
+  currentStep: number
+  steps: string[]
+}
 
-export default function ProgressBar({ currentStep }: { currentStep: number }) {
+export default function ProgressBar({ currentStep, steps }: Props) {
   return (
     <div className="w-full mb-8">
       <div className="flex items-center justify-between">
